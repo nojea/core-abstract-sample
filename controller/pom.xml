@@ -10,6 +10,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>controller</artifactId>
+  <name>store-api-controller</name>
+
+  <properties>
+    <swagger-annotations-version>2.1.11</swagger-annotations-version>
+    <springfox-version>2.9.2</springfox-version>
+    <jackson-databind-nullable>0.2.1</jackson-databind-nullable>
+    <springdoc-openapi-ui-version>1.5.2</springdoc-openapi-ui-version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -32,13 +40,80 @@
       <artifactId>core-new</artifactId>
       <version>${parent.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>core-stock</artifactId>
+      <version>${parent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.springfox</groupId>
+      <artifactId>springfox-swagger2</artifactId>
+      <version>${springfox-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openapitools</groupId>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <version>${jackson-databind-nullable}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+      <version>${swagger-annotations-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-ui</artifactId>
+      <version>${springdoc-openapi-ui-version}</version>
+    </dependency>
   </dependencies>
 
   <build>
+    <finalName>store-api-controller</finalName>
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <configuration>
+              <mainClass>com.example.demo.MultipleCoreImplemSampleApplication</mainClass>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>io.swagger.codegen.v3</groupId>
+        <artifactId>swagger-codegen-maven-plugin</artifactId>
+        <version>3.0.18</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <inputSpec>
+                ${project.basedir}/src/main/resources/openapi.yml
+              </inputSpec>
+              <language>spring</language>
+              <output>${project.build.directory}/generated-sources</output>
+              <generateSupportingFiles>false</generateSupportingFiles>
+              <apiPackage>com.example.demo.controller.api</apiPackage>
+              <modelPackage>com.example.demo.controller.rdto</modelPackage>
+              <modelNameSuffix>RDTO</modelNameSuffix>
+              <configOptions>
+                <interfaceOnly>true</interfaceOnly>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

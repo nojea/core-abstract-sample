@@ -1,12 +1,12 @@
 package com.example.demo.facade;
 
-import com.example.demo.core.ShoeCore;
+import com.example.demo.core.StockCore;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ShoeFacade extends BaseFacade<ShoeCore>{
+public class StockFacade extends BaseFacade<StockCore>{
 
-  public ShoeCore get(Integer version){
+  public StockCore get(Integer version){
     return implementations.get(version);
   }
 }
